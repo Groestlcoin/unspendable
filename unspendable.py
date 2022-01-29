@@ -1,10 +1,10 @@
 #! /usr/bin/env python3
 
 import sys
-import hashlib
+import groestlcoin_hash
 import binascii
 
-dhash = lambda x: hashlib.sha256(hashlib.sha256(x).digest()).digest()
+dhash = lambda x: groestlcoin_hash.getHash(x, len(x))
 b58_digits = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 
 def base58_check_encode(b, version):
@@ -61,11 +61,11 @@ def generate (name, network):
 
     # Pick network.
     if network == 'testnet':
-        prefix_string = 'mv'
+        prefix_string = 'm'
         prefix_bytes = b'\x6f'
     elif network == 'mainnet':
-        prefix_string = '1'
-        prefix_bytes = b'\x00'
+        prefix_string = 'F'
+        prefix_bytes = b'\x24'
     else:
         raise Exception('unknown network')
 
